@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class Feladat {
@@ -16,6 +17,8 @@ public class Feladat {
         this.statisztics = new HashMap<>();
         Beolvasas();
         Kiir();
+        sportagak(); //sout(adatok.size());
+        distinctVersenyzokSzam();
     }
 
     private void Beolvasas() {
@@ -47,6 +50,27 @@ public class Feladat {
                 System.out.println("\t" + item);
             }
             System.out.println();
+        }
+    }
+
+    public void sportagak() {
+        int sportagakSzama = 0;
+        for (Map.Entry<String, ArrayList<Versenyzo>> entry : statisztics.entrySet()) {
+            sportagakSzama++;
+        }
+        System.out.println(sportagakSzama);
+    }
+
+    public void distinctVersenyzokSzam() {
+        HashSet<String> nevek = new HashSet<>();
+        for (Map.Entry<String, ArrayList<Versenyzo>> entry : statisztics.entrySet()) {
+            for (Versenyzo item : entry.getValue()) {
+                nevek.add(item.getNev());
+            }
+        }
+        System.out.println("A versenyzők " + "(" + nevek.size() + "):");
+        for (String item: nevek) {
+            System.out.println(item);
         }
     }
 }
