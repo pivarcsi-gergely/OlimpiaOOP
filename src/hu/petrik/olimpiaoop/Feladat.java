@@ -19,6 +19,7 @@ public class Feladat {
         Kiir();
         sportagak(); //sout(adatok.size());
         distinctVersenyzokSzam();
+        LegtobbGyoztes();
     }
 
     private void Beolvasas() {
@@ -72,5 +73,27 @@ public class Feladat {
         for (String item: nevek) {
             System.out.println(item);
         }
+        System.out.println();
+    }
+
+    public void IdoSzerintiRendezes() {
+        for (Map.Entry<String, ArrayList<Versenyzo>> entry : statisztics.entrySet()) {
+            entry.getValue().sort(new IdoSzerintiKomparator());
+        }
+    }
+
+    public void LegtobbGyoztes() {
+        HashMap<String, Integer> gyoztesek = new HashMap<>();
+        for (Map.Entry<String, ArrayList<Versenyzo>> entry : statisztics.entrySet()) {
+            String nev = entry.getValue().get(0).getNev();
+            gyoztesek.putIfAbsent(nev, 0);
+            gyoztesek.put(nev, gyoztesek.get(nev)+1);
+        }
+        ArrayList<Map.Entry<String, Integer>> ee = new ArrayList<>(gyoztesek.entrySet());
+        ee.sort(new HashMapKomperator());
+        for (Map.Entry<String, Integer> entry: ee) {
+            System.out.println(entry);
+        }
+        System.out.println("A győztes: " + ee.get(0));
     }
 }
